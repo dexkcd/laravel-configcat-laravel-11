@@ -1,0 +1,50 @@
+{
+    "name": "pod-point/package_slug",
+    "description": ":package_description",
+    "keywords": [
+        "pod-point",
+        "laravel",
+        ":package_key"
+    ],
+    "homepage": "https://github.com/pod-point/:package_slug",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Pod Point Software Team",
+            "email": "software@pod-point.com"
+        }
+    ],
+    "require": {
+        "php": "^7.2.5|^8.0",
+        "illuminate/contracts": "~7.0|^8.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^5.0|^6.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "PodPoint\\Skeleton\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "PodPoint\\Skeleton\\Tests\\": "tests"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "PodPoint\\Skeleton\\SkeletonServiceProvider"
+            ]
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit --colors=always",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "sort-packages": true
+    }
+}
