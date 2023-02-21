@@ -88,8 +88,8 @@ class ConfigCatServiceProvider extends ServiceProvider
 
     protected function bladeDirectives()
     {
-        Blade::directive('configcat', function (string $feature, $user = null) {
-            $expression = $user ? "{$feature}, {$user}" : "{$feature}";
+        Blade::directive('configcat', function (string $featureKey, $user = null) {
+            $expression = $user ? "{$featureKey}, {$user}" : "{$featureKey}";
 
             return "<?php if (configcat({$expression})): ?>";
         });
