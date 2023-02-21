@@ -33,15 +33,15 @@ class ConfigCat implements FeatureFlagProviderContract
      * Retrieve a ConfigCat feature flag. According to the ConfigCat SDK it
      * will return false if the flag is undefined or if something went wrong.
      *
-     * @param string $feature
+     * @param string $featureKey
      * @param mixed|null $user
      * @return bool|string|int
      */
-    public function get(string $feature, $user = null)
+    public function get(string $featureKey, $user = null)
     {
         $user = $this->transformUser($user ?: auth()->user());
 
-        return $this->configCatClient->getValue($feature, false, $user);
+        return $this->configCatClient->getValue($featureKey, false, $user);
     }
 
     /**
