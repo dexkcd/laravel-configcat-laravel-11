@@ -19,7 +19,7 @@ class RequiredIfFeature
     {
         if (! is_string($parameters[0] ?? null)) {
             throw new \InvalidArgumentException(
-                'First parameter for `required_if_configcat` validation rule must be the name of a feature flag'
+                'First parameter for `required_if_configcat` validation rule must be the key of a feature flag'
             );
         }
 
