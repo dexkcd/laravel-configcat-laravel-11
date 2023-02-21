@@ -43,10 +43,10 @@ class ConfigCatFake
      */
     public function get(string $featureKey)
     {
-        $featureValue = $this->featureFlags[$feature] ?? false;
+        $featureValue = $this->featureFlags[$featureKey] ?? false;
 
         if (is_array($featureValue)) {
-            $execution = $this->getCount($feature);
+            $execution = $this->getCount($featureKey);
 
             // if the array has run out of values, then use the last position
             $featureValue = ! is_null($featureValue[$execution] ?? null) ?
@@ -54,7 +54,7 @@ class ConfigCatFake
                 Arr::last($featureValue);
         }
 
-        Arr::set($this->flagCounts, $feature, $this->getCount($feature) + 1);
+        Arr::set($this->flagCounts, $featureKey, $this->getCount($featureKey) + 1);
 
         return $featureValue;
     }
