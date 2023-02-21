@@ -5,11 +5,11 @@ namespace PodPoint\ConfigCat\Contracts;
 interface FeatureFlagProviderContract
 {
     /**
-     * @param string $key
+     * @param string $featureKey
      * @param mixed|null $user
      * @return bool|string|int
      */
-    public function get(string $key, $user = null);
+    public function get(string $featureKey, $user = null);
 
     /**
      * @param array $flagsToOverride
