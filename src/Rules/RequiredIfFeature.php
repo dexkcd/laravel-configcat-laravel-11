@@ -10,9 +10,6 @@ class RequiredIfFeature
     use ValidatesAttributes;
 
     /**
-     * Makes a field required if a feature flag is found and is set to a truthy value
-     * such as true (bool), an integer or a string.
-     *
      * @param string $attribute
      * @param mixed $value
      * @param array $parameters
