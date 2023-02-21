@@ -13,12 +13,12 @@ class CheckFeatureFlagOn
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
-     * @param  string  $featureName
+     * @param  string  $featureKey
      * @return mixed
      */
-    public function handle($request, Closure $next, string $featureName)
+    public function handle($request, Closure $next, string $featureKey)
     {
-        abort_unless(ConfigCat::get($featureName) === true, Response::HTTP_NOT_FOUND);
+        abort_unless(ConfigCat::get($featureKey) === true, Response::HTTP_NOT_FOUND);
 
         return $next($request);
     }
