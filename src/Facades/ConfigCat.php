@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\Facade;
 use PodPoint\ConfigCat\Support\ConfigCatFake;
 
 /**
+ * @method static bool|string|int get(string $feature, $user = null)
+ * @method static void override(array $flagsToOverride = [])
+ *
  * @see \PodPoint\ConfigCat\ConfigCat
  */
 class ConfigCat extends Facade
