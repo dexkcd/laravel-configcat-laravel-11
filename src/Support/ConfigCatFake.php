@@ -38,10 +38,10 @@ class ConfigCatFake
      * Retrieve a faked feature flag if it exists. Returns false if the faked
      * feature flag is undefined.
      *
-     * @param string $feature
+     * @param string $featureKey
      * @return bool|string|int
      */
-    public function get(string $feature)
+    public function get(string $featureKey)
     {
         $featureValue = $this->featureFlags[$feature] ?? false;
 
