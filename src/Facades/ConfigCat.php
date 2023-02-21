@@ -16,7 +16,7 @@ class ConfigCat extends Facade
     /**
      * @inheritDoc
      */
-    protected static function getFacadeAccessor()
+    protected static function getFacadeAccessor(): string
     {
         return 'configcat';
     }
