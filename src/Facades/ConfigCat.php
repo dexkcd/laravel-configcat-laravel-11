@@ -13,6 +13,9 @@ use PodPoint\ConfigCat\Support\ConfigCatFake;
  */
 class ConfigCat extends Facade
 {
+    /**
+     * @inheritDoc
+     */
     protected static function getFacadeAccessor()
     {
         return 'configcat';
