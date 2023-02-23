@@ -6,10 +6,11 @@ interface FeatureFlagProviderContract
 {
     /**
      * @param  string  $featureKey
+     * @param  mixed|null  $default
      * @param  mixed|null  $user
-     * @return bool|string|int
+     * @return mixed
      */
-    public function get(string $featureKey, $user = null);
+    public function get(string $featureKey, $default = null, $user = null);
 
     /**
      * @param  array  $flagsToOverride

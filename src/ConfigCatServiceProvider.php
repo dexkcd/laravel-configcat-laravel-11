@@ -76,8 +76,15 @@ class ConfigCatServiceProvider extends ServiceProvider
     private function registerFacade()
     {
         $this->app->singleton('configcat', function ($app) {
+            $default = $app['config']['configcat.default'];
+
+            if (! is_bool($default) && ! is_string($default) && ! is_int($default) && ! is_float($default)) {
+                throw new \InvalidArgumentException('The default value can only be of type boolean, string, integer or float.');
+            }
+
             return new ConfigCat(
                 $app->make(ClientInterface::class),
+                $default,
                 $app['config']['configcat.user'],
                 $app['config']['configcat.overrides.enabled']
                     ? $app['config']['configcat.overrides.file']

@@ -9,13 +9,12 @@ if (! function_exists('configcat')) {
      * If no feature flag is found, false will be returned.
      *
      * @param  string  $featureKey
+     * @param  mixed|null  $default
      * @param  mixed|null  $user
-     * @return bool|string|int
+     * @return mixed
      */
-    function configcat(string $featureKey, $user = null)
+    function configcat(string $featureKey, $default = null, $user = null)
     {
-        return $user
-            ? ConfigCat::get($featureKey, $user)
-            : ConfigCat::get($featureKey);
+        return call_user_func_array([ConfigCat::class, 'get'], func_get_args());
     }
 }
