@@ -23,7 +23,7 @@ return [
     | Here you can define the value which will be returned every time there
     | is a problem trying to reach for ConfigCat CDN or when the feature
     | flag you are trying to retrieve could not be found. This can be
-    | overriden when using ConfigCat::get() or configcat() too.
+    | overridden when using ConfigCat::get() or configcat() too.
     */
 
     'default' => false,
