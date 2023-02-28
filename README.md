@@ -241,7 +241,7 @@ Please see [CONTRIBUTING](https://github.com/Pod-Point/laravel-configcat/blob/ma
 
 ## License
 
-The MIT License (MIT). Please see [License File](https://github.com/Pod-Point/laravel-configcat/blob/main/LICENCE.md) for more information.
+The MIT License (MIT). Please see [License File](https://github.com/Pod-Point/laravel-configcat/blob/main/LICENSE.md) for more information.
 
 ---
 
