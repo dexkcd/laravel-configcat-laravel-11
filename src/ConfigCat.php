@@ -7,19 +7,19 @@ use ConfigCat\ConfigCatClient;
 use ConfigCat\Override\FlagOverrides;
 use ConfigCat\Override\OverrideBehaviour;
 use ConfigCat\Override\OverrideDataSource;
+use ConfigCat\User;
 use Illuminate\Support\Facades\File;
 use PodPoint\ConfigCat\Contracts\FeatureFlagProviderContract;
 
 class ConfigCat implements FeatureFlagProviderContract
 {
-    /** @var ConfigCatClient */
-    protected $configCatClient;
-    /** @var mixed */
-    public $defaultValue = false;
-    /** @var string|null */
-    protected $userTransformer = null;
-    /** @var string|null */
-    protected $overridesFilePath;
+    protected ConfigCatClient|ClientInterface $configCatClient;
+
+    public mixed $defaultValue = false;
+
+    protected ?string $userTransformer = null;
+
+    protected ?string $overridesFilePath;
 
     public function __construct(
         ClientInterface $configCatClient,
@@ -31,18 +31,22 @@ class ConfigCat implements FeatureFlagProviderContract
         $this->defaultValue = $defaultValue;
         $this->userTransformer = $userTransformer;
         $this->overridesFilePath = $overridesFilePath;
+
+        if ($overridesFilePath) {
+            $this->localFile($overridesFilePath);
+        }
     }
 
     /**
      * Retrieve a ConfigCat feature flag. According to the ConfigCat SDK it
      * will return false if the flag is undefined or if something went wrong.
      *
-     * @param  string  $featureKey
-     * @param  mixed|null  $default
-     * @param  mixed|null  $user
+     * @param string  $featureKey
+     * @param mixed|null $default
+     * @param mixed|null $user
      * @return mixed
      */
-    public function get(string $featureKey, $default = null, $user = null)
+    public function get(string $featureKey, mixed $default = null, mixed $user = null): mixed
     {
         $default = is_null($default) ? $this->defaultValue : $default;
         $user = $this->transformUser(is_null($user) ? auth()->user() : $user);
@@ -52,14 +56,12 @@ class ConfigCat implements FeatureFlagProviderContract
 
     /**
      * Conditionally apply the transformation of the user representation using
-     * an callable Class.
+     * a callable Class.
      *
-     * @param  mixed|null  $user
-     * @return \ConfigCat\User|null
-     *
-     * @see \ConfigCat\Support\DefaultUserTransformer
+     * @param mixed|null $user
+     * @return User|null
      */
-    private function transformUser($user = null): ?\ConfigCat\User
+    private function transformUser(mixed $user = null): ?User
     {
         if (! $user || ! $this->userTransformer || ! class_exists($this->userTransformer)) {
             return null;
@@ -73,10 +75,10 @@ class ConfigCat implements FeatureFlagProviderContract
     /**
      * Setup the overrides for ConfigCat options.
      *
-     * @param  string  $filepath
+     * @param ?string $filepath
      * @return FlagOverrides|null
      */
-    public static function overrides(string $filepath): ?FlagOverrides
+    public static function overrides(?string $filepath): ?FlagOverrides
     {
         return $filepath ? new FlagOverrides(
             OverrideDataSource::localFile(self::localFile($filepath)),
@@ -90,13 +92,13 @@ class ConfigCat implements FeatureFlagProviderContract
      * will **only** be read from it if overrides are enabled from the
      * configuration.
      *
-     * @param  array  $flagsToOverride
+     * @param array $flagsToOverride
      * @return void
      */
-    public function override(array $flagsToOverride)
+    public function override(array $flagsToOverride): void
     {
         if (! app()->environment('production') && $this->overridesFilePath) {
-            File::put(self::localFile($this->overridesFilePath), json_encode([
+            File::put($this->overridesFilePath, json_encode([
                 'flags' => $flagsToOverride,
             ]));
         }
@@ -106,7 +108,7 @@ class ConfigCat implements FeatureFlagProviderContract
      * Resolve the file path to use with overrides. This will also make sure
      * the path and file exist along the way.
      *
-     * @param  string  $filepath
+     * @param string $filepath
      * @return string
      */
     private static function localFile(string $filepath): string

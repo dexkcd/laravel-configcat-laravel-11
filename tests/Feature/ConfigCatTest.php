@@ -2,7 +2,8 @@
 
 namespace PodPoint\ConfigCat\Tests\Feature;
 
-use ConfigCat\Cache\CacheItem;
+use Carbon\Carbon;
+use ConfigCat\Cache\ConfigEntry;
 use ConfigCat\ClientInterface;
 use Illuminate\Contracts\Cache\Repository;
 use Illuminate\Support\Facades\File;
@@ -15,7 +16,7 @@ use PodPoint\ConfigCat\Tests\TestCase;
 
 class ConfigCatTest extends TestCase
 {
-    protected function getEnvironmentSetUp($app)
+    protected function getEnvironmentSetUp($app): void
     {
         parent::getEnvironmentSetUp($app);
 
@@ -29,23 +30,22 @@ class ConfigCatTest extends TestCase
 
     public function test_it_can_use_laravel_cache()
     {
-        $fakeCachedItem = new CacheItem();
-        $fakeCachedItem->config = [
+        $entry = ConfigEntry::fromConfigJson(json_encode([
             'f' => [
                 'some_feature' => [
-                    'v' => 'some_cached_value',
+                    'v' => ['s' => 'some_cached_value'],
                     'i' => '430bded3',
                     't' => 1,
                 ],
             ],
-        ];
+        ]), '430bded3', Carbon::now()->timestamp * 1000);
 
         /** @var \Mockery\MockInterface $mockedCacheStore */
         $mockedCacheStore = Mockery::mock(Repository::class);
         $mockedCacheStore
             ->shouldReceive('get')
             ->once()
-            ->andReturn(serialize($fakeCachedItem));
+            ->andReturn($entry->serialize());
 
         $this->mock('cache', function (MockInterface $mock) use ($mockedCacheStore) {
             $mock->shouldReceive('store')
@@ -65,12 +65,7 @@ class ConfigCatTest extends TestCase
                 return Str::contains($message, "Evaluating getValue('some_feature')");
             }), Mockery::type('array'));
 
-        if ($this->app->version() >= '5.6.0') {
-            Log::shouldReceive('channel')->once()->andReturn($mock);
-        } else {
-            fclose(STDERR);
-            $this->instance('log', $mock);
-        }
+        Log::shouldReceive('channel')->once()->andReturn($mock);
 
         ConfigCat::get('some_feature');
     }
