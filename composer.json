@@ -1,5 +1,5 @@
 {
-    "name": "pod-point/laravel-configcat",
+    "name": "dexkcd/laravel-configcat-laravel-11",
     "description": "Implement feature flags with ConfigCat cloud service",
     "keywords": [
         "pod-point",
@@ -8,12 +8,12 @@
         "feature",
         "flags"
     ],
-    "homepage": "https://github.com/pod-point/laravel-configcat",
+    "homepage": "https://github.com/dexkcd/laravel-configcat-laravel-11",
     "license": "MIT",
     "authors": [
         {
-            "name": "Pod Point Software Team",
-            "email": "software@pod-point.com"
+            "name": "Dexter Edep",
+            "email": "dexter.edep@gmail.com"
         }
     ],
     "require": {
