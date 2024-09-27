@@ -46,7 +46,7 @@ class ConfigCat extends Facade
         return $fake;
     }
 
-    protected static function isFake(): bool
+    public static function isFake(): bool
     {
         $name = static::getFacadeAccessor();
 
