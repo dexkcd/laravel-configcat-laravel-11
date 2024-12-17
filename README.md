@@ -15,6 +15,18 @@ You can install the package via composer:
 composer require pod-point/laravel-configcat
 ```
 
+For Laravel 10.x
+
+```bash
+composer require pod-point/laravel-mail-export:^4.0
+```
+
+For Laravel 5.4 up to 9.x
+
+```bash
+composer require pod-point/laravel-mail-export:^3.0
+```
+
 ### Publishing the config file
 
 Next, you should publish the Laravel package configuration file using the `vendor:publish` Artisan command. It will be placed in your application's config directory:
